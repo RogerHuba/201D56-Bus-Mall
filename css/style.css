@@ -1,0 +1,34 @@
+.nav {
+  background-color: #A46845;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+.nav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.nav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.nav a.active {
+  color: white;
+}
+
+.image-div div{
+    display: inline;
+    padding: 3em;
+  }
+
+div img {
+width: 25%;
+border: .1em solid black;
+ }
