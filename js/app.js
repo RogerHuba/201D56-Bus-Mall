@@ -4,7 +4,7 @@ let allProducts = [];
 let productPicture1 = document.getElementById('pod-pic1');
 let productPicture2 = document.getElementById('pod-pic2');
 let productPicture3 = document.getElementById('pod-pic3');
-let randomizerArray = [];
+let randomArray = [];
 
 // Variable to change the number of click selections.  Can change for testing.
 let maxTotalClicks = 25;
@@ -37,16 +37,28 @@ function MallProduct(name)
 function populateRandomProduct () {
   if (maxTotalClicks > 0) {
     let rnd1 = Math.floor(Math.random() * allProducts.length);
-    randomizerArray.push(rnd1);
+    randomArray.push(rnd1);
+    console.log('Rand1: ', rnd1);
     let rnd2 = Math.floor(Math.random() * allProducts.length);
-    while (randomizerArray.includes(rnd2) === true) {
+    console.log('Rand2: ', rnd2);
+    console.log('Random Array: ', randomArray)
+    while (randomArray.includes(rnd2) === true) {
+      console.log('Rand2: ', rnd2);
+      console.log('Random Array: ', randomArray)
       rnd2 = Math.floor(Math.random() * allProducts.length);
     }
-    randomizerArray.push(rnd2);
+    randomArray.push(rnd2);
     let rnd3 = Math.floor(Math.random() * allProducts.length);
-    while (randomizerArray.includes(rnd3) === true) {
+    console.log('Rand3: ', rnd3);
+    console.log('Random Array: ', randomArray)
+    while (randomArray.includes(rnd3) === true) {
+      console.log('Rand3: ', rnd3);
+      console.log('Random Array: ', randomArray)
       rnd3 = Math.floor(Math.random() * allProducts.length);
     }
+    randomArray.push(rnd3);
+    console.log('Rand3: ', rnd3);
+    console.log('Random Array: ', randomArray)
     while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
       && productPicture3.alt === allProducts[rnd3].name)) {
       rnd1 = Math.floor(Math.random() * allProducts.length);
