@@ -2,9 +2,9 @@
 
 let allProducts = [];
 let productPicture1 = document.getElementById('pod-pic1');
-let productPicture2 = document.getElementById('pod-pic1');
-let productPicture3 = document.getElementById('pod-pic1');
-let rnd;
+let productPicture2 = document.getElementById('pod-pic2');
+let productPicture3 = document.getElementById('pod-pic3');
+let randomizerArray = [];
 
 // Variable to change the number of click selections.  Can change for testing.
 let maxTotalClicks = 25;
@@ -36,18 +36,40 @@ function MallProduct(name)
 
 function populateRandomProduct () {
   if (maxTotalClicks > 0) {
-    randomizer(rnd);
-    while ((productPicture1.alt === allProducts[rnd].name)  && (productPicture2.alt === allProducts[rnd].name
-      && productPicture3.alt === allProducts[rnd].name)){
-      randomizer();
+    let rnd1 = Math.floor(Math.random() * allProducts.length);
+    randomizerArray.push(rnd1);
+    let rnd2 = Math.floor(Math.random() * allProducts.length);
+    while (randomizerArray.includes(rnd2) === true) {
+      rnd2 = Math.floor(Math.random() * allProducts.length);
+    }
+    randomizerArray.push(rnd2);
+    let rnd3 = Math.floor(Math.random() * allProducts.length);
+    while (randomizerArray.includes(rnd3) === true) {
+      rnd3 = Math.floor(Math.random() * allProducts.length);
+    }
+    while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
+      && productPicture3.alt === allProducts[rnd3].name)) {
+      rnd1 = Math.floor(Math.random() * allProducts.length);
       console.log('Dupe Detect');
     }
 
+    //TODO: Refactor to loop through to add new pictures.
     maxTotalClicks -= 1;
-    allProducts[rnd].productViews += 1;
-    productPicture1.src = allProducts[rnd].filePath;
-    productPicture1.alt = allProducts[rnd].name;
-    productPicture1.title = allProducts[rnd].name;
+    allProducts[rnd1].productViews += 1;
+    productPicture1.src = allProducts[rnd1].filePath;
+    productPicture1.alt = allProducts[rnd1].name;
+    productPicture1.title = allProducts[rnd1].name;
+
+    allProducts[rnd2].productViews += 1;
+    productPicture2.src = allProducts[rnd2].filePath;
+    productPicture2.alt = allProducts[rnd2].name;
+    productPicture2.title = allProducts[rnd2].name;
+
+    allProducts[rnd3].productViews += 1;
+    productPicture3.src = allProducts[rnd3].filePath;
+    productPicture3.alt = allProducts[rnd3].name;
+    productPicture3.title = allProducts[rnd3].name;
+
   } else {
     productPicture1.removeEventListener('click', displayTotals)
   }
@@ -55,8 +77,8 @@ function populateRandomProduct () {
 
 function handleClick(event) {
   console.log(event.target)
-
   populateRandomProduct()
+  //TODO: Add product click handler
 }
 
 //TODO: Refactor to add to local storage.
@@ -89,7 +111,4 @@ function displayTotals(){
   console.table(allProducts);
 }
 
-function randomizer (rnd){
-  rnd = Math.floor(Math.random() * allProducts.length);
-  return rnd;
-}
+//TODO: Make a randomizer functuion.
