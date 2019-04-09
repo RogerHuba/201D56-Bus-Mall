@@ -37,7 +37,12 @@ function MallProduct(name)
 function populateRandomProduct () {
   if (maxTotalClicks > 0) {
     let rnd1 = Math.floor(Math.random() * allProducts.length);
-    randomArray.push(rnd1);
+    if (randomArray.length < 6) {
+      randomArray.push(rnd1);
+    } else {
+      randomArray.pop();
+      randomArray.unshift(rnd1);
+    }
     console.log('Rand1: ', rnd1);
     let rnd2 = Math.floor(Math.random() * allProducts.length);
     console.log('Rand2: ', rnd2);
@@ -47,7 +52,12 @@ function populateRandomProduct () {
       console.log('Random Array: ', randomArray)
       rnd2 = Math.floor(Math.random() * allProducts.length);
     }
-    randomArray.push(rnd2);
+    if (randomArray.length < 6) {
+      randomArray.push(rnd2);
+    } else {
+      randomArray.pop();
+      randomArray.unshift(rnd2);
+    }
     let rnd3 = Math.floor(Math.random() * allProducts.length);
     console.log('Rand3: ', rnd3);
     console.log('Random Array: ', randomArray)
@@ -56,7 +66,12 @@ function populateRandomProduct () {
       console.log('Random Array: ', randomArray)
       rnd3 = Math.floor(Math.random() * allProducts.length);
     }
-    randomArray.push(rnd3);
+    if (randomArray.length < 6) {
+      randomArray.push(rnd3);
+    } else {
+      randomArray.pop();
+      randomArray.unshift(rnd3);
+    }
     console.log('Rand3: ', rnd3);
     console.log('Random Array: ', randomArray)
     while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
