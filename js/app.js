@@ -95,12 +95,14 @@ function populateRandomProduct () {
     productPicture3.title = allProducts[rnd3].name;
 
   } else {
-    productPicture1.removeEventListener('click', displayTotals)
+    productPicture1.removeEventListener('click', displayTotals);
+    productPicture2.removeEventListener('click', displayTotals);
+    productPicture3.removeEventListener('click', displayTotals);
+
   }
 }
 
 function handleClick(event) {
-  console.log(event.target)
   populateRandomProduct()
   //TODO: Add product click handler
 }
@@ -132,7 +134,9 @@ function seedData()
 
 //TODO: Refactor to display data in Chart JS Form.
 function displayTotals(){
-  console.table(allProducts);
+  for (let i=0; i < allProducts.length; i++){
+    console.table(allProducts);
+  }
 }
 
-//TODO: Make a randomizer functuion.
+//TODO: Make a random function.
