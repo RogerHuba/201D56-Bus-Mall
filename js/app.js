@@ -4,10 +4,11 @@ let allProducts = [];
 let productPicture1 = document.getElementById('pod-pic1');
 let productPicture2 = document.getElementById('pod-pic2');
 let productPicture3 = document.getElementById('pod-pic3');
+let displayResults = document.getElementById('click-results');
 let randomArray = [];
 
 // Variable to change the number of click selections.  Can change for testing.
-let maxTotalClicks = 25;
+let clicksLeft = 25;
 
 // TODO: Refactor to change the number of pictures to be displayed in the screen
 // let picturesToDisplayOnScreen = 3;
@@ -23,7 +24,6 @@ productPicture1.addEventListener('click', handleClick);
 productPicture2.addEventListener('click', handleClick);
 productPicture3.addEventListener('click', handleClick);
 
-
 function MallProduct(name)
 {
   this.filePath = `img/${name}.jpg`;
@@ -35,7 +35,8 @@ function MallProduct(name)
 }
 
 function populateRandomProduct () {
-  if (maxTotalClicks > 0) {
+  console.log('Clicks left: ',clicksLeft);
+  if (clicksLeft > 0) {
     let rnd1 = Math.floor(Math.random() * allProducts.length);
     while (randomArray.includes(rnd1) === true) {
       rnd1 = Math.floor(Math.random() * allProducts.length);
@@ -72,13 +73,13 @@ function populateRandomProduct () {
     }
     allProducts[rnd3].productViews +=1;
 
-    while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
-      && productPicture3.alt === allProducts[rnd3].name)) {
-      rnd1 = Math.floor(Math.random() * allProducts.length);
-    }
+    // while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
+    //   && productPicture3.alt === allProducts[rnd3].name)) {
+    //   rnd1 = Math.floor(Math.random() * allProducts.length);
+    // }
 
     //TODO: Refactor to loop through to add new pictures.
-    maxTotalClicks -= 1;
+    clicksLeft -= 1;
     allProducts[rnd1].productViews += 1;
     productPicture1.src = allProducts[rnd1].filePath;
     productPicture1.alt = allProducts[rnd1].name;
@@ -95,19 +96,27 @@ function populateRandomProduct () {
     productPicture3.title = allProducts[rnd3].name;
 
   } else {
-    productPicture1.removeEventListener('click', displayTotals);
-    productPicture2.removeEventListener('click', displayTotals);
-    productPicture3.removeEventListener('click', displayTotals);
-
+    console.log('Made it here.  Removing Event Listener');
+    productPicture1.removeEventListener('click', handleClick);
+    productPicture2.removeEventListener('click', handleClick);
+    productPicture3.removeEventListener('click', handleClick);
+    displayTotals();
   }
 }
 
 function handleClick(event) {
+  console.log(event.target.alt);
+  //Leaving the following code commented out for future troubleshooting on delay of event target.
+  // console.log(event.target);
+  for (let i=0; i < allProducts.length;i++){
+    if (event.target.alt === allProducts[i].name){
+      allProducts[i].productClicks += 1;
+    }
+  }
   populateRandomProduct()
-  //TODO: Add product click handler
+
 }
 
-//TODO: Refactor to add to local storage.
 function seedData()
 {
   new MallProduct('bag');
@@ -116,7 +125,7 @@ function seedData()
   new MallProduct('boots');
   new MallProduct('breakfast');
   new MallProduct('bubblegum');
-  new MallProduct('chair',);
+  new MallProduct('chair');
   new MallProduct('cthulhu');
   new MallProduct('dog-duck');
   new MallProduct('dragon');
@@ -134,9 +143,12 @@ function seedData()
 
 //TODO: Refactor to display data in Chart JS Form.
 function displayTotals(){
+  console.log('Made it to the displayTotals Function');
   for (let i=0; i < allProducts.length; i++){
-    console.table(allProducts);
+    let newLine = `${allProducts[i].productClicks} votes for the ${allProducts[i].name}.`;
+    let newElement = document.createElement('li');
+    let newContent = document.createTextNode(newLine);
+    newElement.appendChild(newContent);
+    displayResults.appendChild(newElement);
   }
 }
-
-//TODO: Make a random function.

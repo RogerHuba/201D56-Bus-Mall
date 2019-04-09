@@ -1,5 +1,5 @@
 .nav {
-  background-color: #A46845;
+  background-color: #ccc;
   overflow: hidden;
   position: fixed;
   width: 100%;
@@ -28,9 +28,9 @@
     padding: 3em;
   }
 
-div  img {
+section img {
   padding-top: 20px;
   margin-top: 20px;
-  width: 10%;
+  width: 15em;
   border: .1em solid black;
  }
