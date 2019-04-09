@@ -37,19 +37,19 @@ function MallProduct(name)
 function populateRandomProduct () {
   if (maxTotalClicks > 0) {
     let rnd1 = Math.floor(Math.random() * allProducts.length);
+    while (randomArray.includes(rnd1) === true) {
+      rnd1 = Math.floor(Math.random() * allProducts.length);
+    }
     if (randomArray.length < 6) {
       randomArray.push(rnd1);
     } else {
       randomArray.pop();
       randomArray.unshift(rnd1);
     }
-    console.log('Rand1: ', rnd1);
+    allProducts[rnd1].productViews +=1;
+
     let rnd2 = Math.floor(Math.random() * allProducts.length);
-    console.log('Rand2: ', rnd2);
-    console.log('Random Array: ', randomArray)
     while (randomArray.includes(rnd2) === true) {
-      console.log('Rand2: ', rnd2);
-      console.log('Random Array: ', randomArray)
       rnd2 = Math.floor(Math.random() * allProducts.length);
     }
     if (randomArray.length < 6) {
@@ -58,12 +58,10 @@ function populateRandomProduct () {
       randomArray.pop();
       randomArray.unshift(rnd2);
     }
+    allProducts[rnd2].productViews +=1;
+
     let rnd3 = Math.floor(Math.random() * allProducts.length);
-    console.log('Rand3: ', rnd3);
-    console.log('Random Array: ', randomArray)
     while (randomArray.includes(rnd3) === true) {
-      console.log('Rand3: ', rnd3);
-      console.log('Random Array: ', randomArray)
       rnd3 = Math.floor(Math.random() * allProducts.length);
     }
     if (randomArray.length < 6) {
@@ -72,12 +70,11 @@ function populateRandomProduct () {
       randomArray.pop();
       randomArray.unshift(rnd3);
     }
-    console.log('Rand3: ', rnd3);
-    console.log('Random Array: ', randomArray)
+    allProducts[rnd3].productViews +=1;
+
     while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
       && productPicture3.alt === allProducts[rnd3].name)) {
       rnd1 = Math.floor(Math.random() * allProducts.length);
-      console.log('Dupe Detect');
     }
 
     //TODO: Refactor to loop through to add new pictures.
