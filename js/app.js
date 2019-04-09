@@ -23,7 +23,6 @@ productPicture1.addEventListener('click', handleClick);
 productPicture2.addEventListener('click', handleClick);
 productPicture3.addEventListener('click', handleClick);
 
-
 function MallProduct(name)
 {
   this.filePath = `img/${name}.jpg`;
@@ -116,7 +115,7 @@ function seedData()
   new MallProduct('boots');
   new MallProduct('breakfast');
   new MallProduct('bubblegum');
-  new MallProduct('chair',);
+  new MallProduct('chair');
   new MallProduct('cthulhu');
   new MallProduct('dog-duck');
   new MallProduct('dragon');
