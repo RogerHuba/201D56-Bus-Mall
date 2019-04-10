@@ -7,7 +7,7 @@ let productPicture3 = document.getElementById('pod-pic3');
 let ctx = document.getElementById('summary').getContext('2d');
 let clicks = [];
 let names =[];
-
+let myProducts = localStorage.getItem('productInformation');
 let randomArray = [0,0,0,0,0,0];
 
 // Variable to change the number of click selections.  Can change for testing.
@@ -38,6 +38,7 @@ function MallProduct(name, productViews=0, productClicks=0)
   allProducts.push(this);
 }
 
+
 // Populate Random Product -> randomizer -> displayProductOnPage
 function populateRandomProduct () {
   console.log('Clicks left: ',clicksLeft);
@@ -64,30 +65,35 @@ function handleClick(event) {
 
 function seedData()
 {
-  new MallProduct('bag');
-  new MallProduct('banana');
-  new MallProduct('bathroom');
-  new MallProduct('boots');
-  new MallProduct('breakfast');
-  new MallProduct('bubblegum');
-  new MallProduct('chair');
-  new MallProduct('cthulhu');
-  new MallProduct('dog-duck');
-  new MallProduct('dragon');
-  new MallProduct('pen');
-  new MallProduct('pet-sweep');
-  new MallProduct('scissors');
-  new MallProduct('shark');
-  new MallProduct('sweep');
-  new MallProduct('tauntaun');
-  new MallProduct('unicorn');
-  new MallProduct('usb');
-  new MallProduct('water-can');
-  new MallProduct('wine-glass');
+  if (myProducts){
+    allProducts = JSON.parse(myProducts);
+  } else {
+    new MallProduct('bag');
+    new MallProduct('banana');
+    new MallProduct('bathroom');
+    new MallProduct('boots');
+    new MallProduct('breakfast');
+    new MallProduct('bubblegum');
+    new MallProduct('chair');
+    new MallProduct('cthulhu');
+    new MallProduct('dog-duck');
+    new MallProduct('dragon');
+    new MallProduct('pen');
+    new MallProduct('pet-sweep');
+    new MallProduct('scissors');
+    new MallProduct('shark');
+    new MallProduct('sweep');
+    new MallProduct('tauntaun');
+    new MallProduct('unicorn');
+    new MallProduct('usb');
+    new MallProduct('water-can');
+    new MallProduct('wine-glass');
+  }
 }
 
 //TODO: Refactor to display data in Chart JS Form.
 function displayTotals(){
+  localStorage.setItem('productInformation', JSON.stringify(allProducts));
   updateChartArrays();
   getGraph();
 }
