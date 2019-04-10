@@ -5,6 +5,8 @@ let productPicture1 = document.getElementById('pod-pic1');
 let productPicture2 = document.getElementById('pod-pic2');
 let productPicture3 = document.getElementById('pod-pic3');
 let ctx = document.getElementById('summary').getContext('2d');
+let clicks = [];
+let name = [];
 
 //removed for testing
 // let displayResults = document.getElementById('click-results');
@@ -88,6 +90,7 @@ function seedData()
 
 //TODO: Refactor to display data in Chart JS Form.
 function displayTotals(){
+  updateChartArrays();
   getGraph();
   // for (let i=0; i < allProducts.length; i++){
   //   let newLine = `${allProducts[i].productClicks} votes for the ${allProducts[i].name}.`;
@@ -121,13 +124,13 @@ function displayProductOnPage(number, element){
     element.title = allProducts[number].name;
 }
 
-function addElement(element, content, parent){
-  let docAdd = document.getElementsByTagName(parent);
-  let newElement = document.createElement(element);
-  let newContent = document.createTextNode(content);
-  newElement.appendChild(newContent);
-  docAdd.appendChild(newElement);
-}
+// function addElement(element, content, parent){
+//   let docAdd = document.getElementsByTagName(parent);
+//   let newElement = document.createElement(element);
+//   let newContent = document.createTextNode(content);
+//   newElement.appendChild(newContent);
+//   docAdd.appendChild(newElement);
+// }
 
 function getGraph()
 {
@@ -137,7 +140,7 @@ function getGraph()
       data:
         {
           //Need to loop through the name data
-          labels: names,
+          labels: name,
           datasets: [
             {
               label: '# of Clicks',
@@ -171,14 +174,14 @@ function getGraph()
 }
 
 function updateChartArrays() {
-  for (var i = 0; i < mallProductArray.length; i++) {
-    names[i] = mallProductArray[i].productName;
-    console.log('The click number is: ' + mallProductArray[i].productClick);
-    clicks[i] = mallProductArray[i].productClick;
+  for (let i = 0; i < allProducts.length; i++) {
+    name[i] = allProducts[i].name;
+    console.log('The click number is: ' + allProducts[i].productClicks);
+    clicks[i] = allProducts[i].productClicks;
 
   }
 }
 
-function clickOff() {
-  //Function added to remove the click from the event handler
-}
+// function clickOff() {
+//   //Function added to remove the click from the event handler
+// }
