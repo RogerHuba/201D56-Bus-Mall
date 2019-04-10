@@ -4,14 +4,17 @@ let allProducts = [];
 let productPicture1 = document.getElementById('pod-pic1');
 let productPicture2 = document.getElementById('pod-pic2');
 let productPicture3 = document.getElementById('pod-pic3');
-let displayResults = document.getElementById('click-results');
-let randomArray = [];
+let ctx = document.getElementById('summary').getContext('2d');
+
+//removed for testing
+// let displayResults = document.getElementById('click-results');
+let randomArray = [0,0,0,0,0,0];
 
 // Variable to change the number of click selections.  Can change for testing.
 let clicksLeft = 25;
 
-// TODO: Refactor to change the number of pictures to be displayed in the screen
-// let picturesToDisplayOnScreen = 3;
+//Variable to change the number of pictures to display on screen.
+let picturesToDisplayOnScreen = 4;
 
 // Calls the function to push data through the constructor function.
 seedData();
@@ -24,79 +27,25 @@ productPicture1.addEventListener('click', handleClick);
 productPicture2.addEventListener('click', handleClick);
 productPicture3.addEventListener('click', handleClick);
 
-function MallProduct(name)
+//Constructor Function to populate allProducts Array.
+function MallProduct(name, productViews=0, productClicks=0)
 {
   this.filePath = `img/${name}.jpg`;
   this.name = name;
-  this.productViews = 0;
-  this.productClicks = 0;
+  this.productViews = productViews;
+  this.productClicks = productClicks;
 
   allProducts.push(this);
 }
 
+// Populate Random Product -> randomizer -> displayProductOnPage
 function populateRandomProduct () {
   console.log('Clicks left: ',clicksLeft);
   if (clicksLeft > 0) {
-    let rnd1 = Math.floor(Math.random() * allProducts.length);
-    while (randomArray.includes(rnd1) === true) {
-      rnd1 = Math.floor(Math.random() * allProducts.length);
-    }
-    if (randomArray.length < 6) {
-      randomArray.push(rnd1);
-    } else {
-      randomArray.pop();
-      randomArray.unshift(rnd1);
-    }
-    allProducts[rnd1].productViews +=1;
-
-    let rnd2 = Math.floor(Math.random() * allProducts.length);
-    while (randomArray.includes(rnd2) === true) {
-      rnd2 = Math.floor(Math.random() * allProducts.length);
-    }
-    if (randomArray.length < 6) {
-      randomArray.push(rnd2);
-    } else {
-      randomArray.pop();
-      randomArray.unshift(rnd2);
-    }
-    allProducts[rnd2].productViews +=1;
-
-    let rnd3 = Math.floor(Math.random() * allProducts.length);
-    while (randomArray.includes(rnd3) === true) {
-      rnd3 = Math.floor(Math.random() * allProducts.length);
-    }
-    if (randomArray.length < 6) {
-      randomArray.push(rnd3);
-    } else {
-      randomArray.pop();
-      randomArray.unshift(rnd3);
-    }
-    allProducts[rnd3].productViews +=1;
-
-    // while ((productPicture1.alt === allProducts[rnd1].name) && (productPicture2.alt === allProducts[rnd2].name
-    //   && productPicture3.alt === allProducts[rnd3].name)) {
-    //   rnd1 = Math.floor(Math.random() * allProducts.length);
-    // }
-
-    //TODO: Refactor to loop through to add new pictures.
+    randomizer();
     clicksLeft -= 1;
-    allProducts[rnd1].productViews += 1;
-    productPicture1.src = allProducts[rnd1].filePath;
-    productPicture1.alt = allProducts[rnd1].name;
-    productPicture1.title = allProducts[rnd1].name;
-
-    allProducts[rnd2].productViews += 1;
-    productPicture2.src = allProducts[rnd2].filePath;
-    productPicture2.alt = allProducts[rnd2].name;
-    productPicture2.title = allProducts[rnd2].name;
-
-    allProducts[rnd3].productViews += 1;
-    productPicture3.src = allProducts[rnd3].filePath;
-    productPicture3.alt = allProducts[rnd3].name;
-    productPicture3.title = allProducts[rnd3].name;
 
   } else {
-    console.log('Made it here.  Removing Event Listener');
     productPicture1.removeEventListener('click', handleClick);
     productPicture2.removeEventListener('click', handleClick);
     productPicture3.removeEventListener('click', handleClick);
@@ -105,16 +54,12 @@ function populateRandomProduct () {
 }
 
 function handleClick(event) {
-  console.log(event.target.alt);
-  //Leaving the following code commented out for future troubleshooting on delay of event target.
-  // console.log(event.target);
   for (let i=0; i < allProducts.length;i++){
     if (event.target.alt === allProducts[i].name){
       allProducts[i].productClicks += 1;
     }
   }
-  populateRandomProduct()
-
+  populateRandomProduct();
 }
 
 function seedData()
@@ -143,12 +88,97 @@ function seedData()
 
 //TODO: Refactor to display data in Chart JS Form.
 function displayTotals(){
-  console.log('Made it to the displayTotals Function');
-  for (let i=0; i < allProducts.length; i++){
-    let newLine = `${allProducts[i].productClicks} votes for the ${allProducts[i].name}.`;
-    let newElement = document.createElement('li');
-    let newContent = document.createTextNode(newLine);
-    newElement.appendChild(newContent);
-    displayResults.appendChild(newElement);
+  getGraph();
+  // for (let i=0; i < allProducts.length; i++){
+  //   let newLine = `${allProducts[i].productClicks} votes for the ${allProducts[i].name}.`;
+  //   let newElement = document.createElement('li');
+  //   let newContent = document.createTextNode(newLine);
+  //   newElement.appendChild(newContent);
+  //   displayResults.appendChild(newElement);
+  // }
+}
+
+function randomizer() {
+  for (let i = 0; i < picturesToDisplayOnScreen; i++) {
+    let rnd = Math.floor(Math.random() * allProducts.length);
+    while (randomArray.includes(rnd) === true) {
+      rnd = Math.floor(Math.random() * allProducts.length);
+    }
+    randomArray.pop();
+    randomArray.unshift(rnd);
+    allProducts[rnd].productViews += 1;
+
   }
+    displayProductOnPage(randomArray[0],productPicture1);
+    displayProductOnPage(randomArray[1],productPicture2);
+    displayProductOnPage(randomArray[2],productPicture3);
+}
+
+function displayProductOnPage(number, element){
+    allProducts[number].productViews += 1;
+    element.src = allProducts[number].filePath;
+    element.alt = allProducts[number].name;
+    element.title = allProducts[number].name;
+}
+
+function addElement(element, content, parent){
+  let docAdd = document.getElementsByTagName(parent);
+  let newElement = document.createElement(element);
+  let newContent = document.createTextNode(content);
+  newElement.appendChild(newContent);
+  docAdd.appendChild(newElement);
+}
+
+function getGraph()
+{
+  let summary = new Chart(ctx,
+    {
+      type: 'bar',
+      data:
+        {
+          //Need to loop through the name data
+          labels: names,
+          datasets: [
+            {
+              label: '# of Clicks',
+              //Need to loop through the click data with %
+              data: clicks,
+              backgroundColor: [
+                'crimson',
+                'blue',
+                'yellow',
+                'orange',
+                'violet',
+                'crimson',
+                'blue',
+                'yellow',
+                'orange',
+                'violet',
+                'crimson',
+                'blue',
+                'yellow',
+                'orange',
+                'violet',
+                'crimson',
+                'blue',
+                'yellow',
+                'orange',
+                'violet'
+              ]
+            }]
+        }
+    });
+}
+
+function updateChartArrays() {
+  for (var i = 0; i < mallProductArray.length; i++) {
+    names[i] = mallProductArray[i].productName;
+    console.log('The click number is: ' + mallProductArray[i].productClick);
+    clicks[i] = mallProductArray[i].productClick;
+
+  }
+}
+
+function clickOff() {
+  //Function added to remove the click from the event handler
 }
