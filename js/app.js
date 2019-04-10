@@ -8,8 +8,6 @@ let ctx = document.getElementById('summary').getContext('2d');
 let clicks = [];
 let names =[];
 
-//removed for testing
-// let displayResults = document.getElementById('click-results');
 let randomArray = [0,0,0,0,0,0];
 
 // Variable to change the number of click selections.  Can change for testing.
@@ -129,7 +127,6 @@ function getGraph()
           datasets: [
             {
               label: '# of Clicks',
-              //Need to loop through the click data with %
               data: clicks,
               backgroundColor: [
                 'crimson',
@@ -163,6 +160,5 @@ function updateChartArrays() {
     names[i] = allProducts[i].name;
     console.log('The click number is: ' + allProducts[i].productClicks);
     clicks[i] = allProducts[i].productClicks;
-
   }
 }
