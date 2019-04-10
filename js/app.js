@@ -6,7 +6,7 @@ let productPicture2 = document.getElementById('pod-pic2');
 let productPicture3 = document.getElementById('pod-pic3');
 let ctx = document.getElementById('summary').getContext('2d');
 let clicks = [];
-let name = [];
+let names =[];
 
 //removed for testing
 // let displayResults = document.getElementById('click-results');
@@ -92,13 +92,6 @@ function seedData()
 function displayTotals(){
   updateChartArrays();
   getGraph();
-  // for (let i=0; i < allProducts.length; i++){
-  //   let newLine = `${allProducts[i].productClicks} votes for the ${allProducts[i].name}.`;
-  //   let newElement = document.createElement('li');
-  //   let newContent = document.createTextNode(newLine);
-  //   newElement.appendChild(newContent);
-  //   displayResults.appendChild(newElement);
-  // }
 }
 
 function randomizer() {
@@ -110,37 +103,29 @@ function randomizer() {
     randomArray.pop();
     randomArray.unshift(rnd);
     allProducts[rnd].productViews += 1;
-
   }
-    displayProductOnPage(randomArray[0],productPicture1);
-    displayProductOnPage(randomArray[1],productPicture2);
-    displayProductOnPage(randomArray[2],productPicture3);
+  displayProductOnPage(randomArray[0],productPicture1);
+  displayProductOnPage(randomArray[1],productPicture2);
+  displayProductOnPage(randomArray[2],productPicture3);
 }
 
 function displayProductOnPage(number, element){
-    allProducts[number].productViews += 1;
-    element.src = allProducts[number].filePath;
-    element.alt = allProducts[number].name;
-    element.title = allProducts[number].name;
+  allProducts[number].productViews += 1;
+  element.src = allProducts[number].filePath;
+  element.alt = allProducts[number].name;
+  element.title = allProducts[number].name;
 }
-
-// function addElement(element, content, parent){
-//   let docAdd = document.getElementsByTagName(parent);
-//   let newElement = document.createElement(element);
-//   let newContent = document.createTextNode(content);
-//   newElement.appendChild(newContent);
-//   docAdd.appendChild(newElement);
-// }
 
 function getGraph()
 {
+  // eslint-disable-next-line no-unused-vars
   let summary = new Chart(ctx,
     {
       type: 'bar',
       data:
         {
           //Need to loop through the name data
-          labels: name,
+          labels: names,
           datasets: [
             {
               label: '# of Clicks',
@@ -175,13 +160,9 @@ function getGraph()
 
 function updateChartArrays() {
   for (let i = 0; i < allProducts.length; i++) {
-    name[i] = allProducts[i].name;
+    names[i] = allProducts[i].name;
     console.log('The click number is: ' + allProducts[i].productClicks);
     clicks[i] = allProducts[i].productClicks;
 
   }
 }
-
-// function clickOff() {
-//   //Function added to remove the click from the event handler
-// }
