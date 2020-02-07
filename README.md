@@ -11,3 +11,5 @@ Roger Huba
 2 - Implement Chart JS
 3 - Implement Local Storage
 
+Blah blah
+
