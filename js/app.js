@@ -30,7 +30,7 @@ productPicture3.addEventListener('click', handleClick);
 //Constructor Function to populate allProducts Array.
 function MallProduct(name, productViews=0, productClicks=0)
 {
-  this.filePath = `img/${name}.jpg`;
+  this.filePath = `./img/${name}.jpg`;
   this.name = name;
   this.productViews = productViews;
   this.productClicks = productClicks;
