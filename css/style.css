@@ -31,8 +31,8 @@
 section img {
   padding-top: 20px;
   margin-top: 20px;
-  width: 20%;
-  height: 30%;
+  width: 200px;
+  height: 180px;
   border: .1em solid black;
   object-fit: scale-down;
  }
